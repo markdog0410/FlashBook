@@ -4,5 +4,6 @@
         <file>images/refresh.png</file>
         <file>images/qr_img.png</file>
         <file>images/eye.png</file>
+        <file>images/flashbook.png</file>
     </qresource>
 </RCC>

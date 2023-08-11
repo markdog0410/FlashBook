@@ -207,6 +207,11 @@ class Hsr_Component:
                 if member_confirm.is_displayed():
                     member_confirm.click()
 
+            page_source = self.driver.page_source
+
+            if "您已完成訂位" in page_source:
+                return "訂位完成! 請記得在限期內付款完畢。\n詳細資料還請參考台灣高鐵官方網站資料，謝謝。";
+
             if "feedbackPanelERROR" in page_source:
                 print("Third Page Error...")
                 if self.driver.find_element(by=By.CLASS_NAME, value="feedbackPanelERROR").is_displayed():
@@ -215,11 +220,9 @@ class Hsr_Component:
                     for element in error_elements:
                         err_msg += element.text + "\n"
                     return err_msg
-            else:
-                if "您已完成訂位" in page_source:
-                    return "訂位完成! 請記得在限期內付款完畢。\n詳細資料還請參考台灣高鐵官方網站資料，謝謝。";
-                # return True
+
         except Exception as e:
+            print(str(e))
             raise e
 
     def reload_web(self):

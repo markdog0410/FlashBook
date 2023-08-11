@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QLabel, QDialogButtonBox, QDialog, QApplication, QWidget, \
     QMessageBox
 from dateutil.parser import parse
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, NoSuchWindowException
 
 from UI import Ui_MainWindow
 from hsr_web_driver import Hsr_Component
@@ -64,6 +64,8 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
         except NoSuchElementException as e:
             self.show_error_on_ui("請點【重新訂票】再試一次，若仍有問題麻煩來信，謝謝。")
+        except NoSuchWindowException:
+            self.show_error_on_ui("請重新開啟訂票程式，並保持瀏覽器開啟狀態!!")
         except Exception as e:
             print(e)
 
@@ -95,9 +97,16 @@ class MainWindow_controller(QtWidgets.QMainWindow):
             print(str(e))
 
     def reload_web(self):
-        self.show_error_on_ui("")
-        self.hsr_web_driver.reload_web()
-        self.show_captcha()
+        try:
+            self.show_error_on_ui("")
+            self.hsr_web_driver.reload_web()
+            self.show_captcha()
+        except NoSuchWindowException:
+            self.show_error_on_ui("請重新開啟訂票程式，並保持瀏覽器開啟狀態!!")
+        except Exception as e:
+            print(str(e))
+
+
 
     def get_adult_mapping_value(self):
         try:
@@ -420,12 +429,11 @@ class MainWindow_controller(QtWidgets.QMainWindow):
 
             labels = [f'ID:{i + 1}' for i in range(len(show_list))]
             line_edits = [QLineEdit() for _ in range(len(show_list))]
-            for label, line_edit, love_id in zip(labels, line_edits, show_list):
-                print(f'Label ==>> {label}')
-                print(f'Love id ==>> {love_id}')
+            for label, line_edit, id_item in zip(labels, line_edits, show_list):
+                print(f'ID => {label}, {id_item}')
                 label_widget = QLabel(label)
                 layout.addWidget(label_widget)
-                line_edit.setText(love_id)
+                line_edit.setText(id_item)
                 line_edit.setReadOnly(True)
                 line_edit.setStyleSheet("background-color: #D0D0D0;")
                 layout.addWidget(line_edit)

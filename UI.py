@@ -9,12 +9,15 @@
 from datetime import date
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
+
 import resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(600, 680)
+        # MainWindow.resize(600, 680)
+        MainWindow.setFixedSize(600, 680)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -491,7 +494,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("FlashBook", "FlashBook"))
+        MainWindow.setWindowIcon(QIcon(":/images/flashbook.png"))
         self.pending_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ff0000;\">敬請期待!</span></p></body></html>"))
         self.end_station_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">終點站：</span></p></body></html>"))
         self.start_station_select.setItemText(0, _translate("MainWindow", "請選擇"))
