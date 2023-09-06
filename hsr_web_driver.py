@@ -5,6 +5,8 @@ from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from PIL import Image
 from io import BytesIO
 
@@ -13,13 +15,17 @@ page_source = None
 
 class Hsr_Component:
     def __init__(self):
+
         self.chrome_options = Options()
         self.chrome_options.add_experimental_option("detach", True)
         self.chrome_options.add_argument("--disable-blink-features")
         self.chrome_options.add_argument("--disable-blink-features=AutomationControlled")
         self.chrome_options.add_argument("--disable-gpu")
         self.chrome_options.add_argument("--disable-extensions")
-        self.driver = webdriver.Chrome(options=self.chrome_options)
+        # chrome_path = 'D:\\SideProject\\flash_book\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe'
+        # self.chrome_options.binary_location = chrome_path
+        # self.driver = webdriver.Chrome(options=self.chrome_options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(),options=self.chrome_options)
         self.driver.get("https://irs.thsrc.com.tw/IMINT/")
         if self.driver.page_source.__contains__("台灣高鐵網路訂票系統 個人資料使用說明"):
             self.driver.find_element(by=By.ID, value="cookieAccpetBtn").click()

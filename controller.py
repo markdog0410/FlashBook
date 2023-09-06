@@ -329,21 +329,21 @@ class MainWindow_controller(QtWidgets.QMainWindow):
                 self.hsr_web_driver.fill_out_captcha(captcha_text)
 
                 first_page = self.hsr_web_driver.submit_first_page_or_error()
-                print(f"First page = {first_page}")
+                # print(f"First page = {first_page}")
                 if isinstance(first_page, str):
                     self.show_error_on_ui(first_page)
                     self.refresh_captcha()
                     self.ui.captcha_img_lineEdit.setText("")
                 elif first_page:
                     second_page = self.hsr_web_driver.submit_second_page_or_error()
-                    print(f"Second page = {second_page}")
+                    # print(f"Second page = {second_page}")
                     if isinstance(second_page, str):
                         self.show_error_on_ui(second_page)
                     elif second_page:
                         third_page = self.hsr_web_driver.submit_third_page_or_error(id_text, email_text, phone_text,
                                                                                     member_text, member_id,
                                                                                     love_id_values, priority_id_values)
-                        print(f"Third Page = {third_page}")
+                        # print(f"Third Page = {third_page}")
                         print(f"IDs == >> {love_id_values}, {priority_id_values}")
                         if isinstance(third_page, str):
                             self.show_error_on_ui(third_page)

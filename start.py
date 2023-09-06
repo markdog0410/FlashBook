@@ -22,11 +22,12 @@ def warning_msg(event):
 
 if __name__ == '__main__':
     import sys
-
+    print("系統載入資源中...請稍後")
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow_controller()
     window.show()
     if warning_msg(window):
         sys.exit(app.exec_())
     else:
+        print("如需再次使用，請關閉所有窗口並重啟程式。感謝您 (^o^)")
         app.quit()
